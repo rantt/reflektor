@@ -24,7 +24,7 @@ Game.PlayAgain.prototype = {
       bestTimeText.setText("You Lasted "+this.runningTime);
     }
 
-    var text = this.game.add.bitmapText(Game.w/2-120, Game.h/2, 'minecraftia', 'Click to play again', 21);
+    var playagainButton = this.game.add.button(Game.w/2-75, Game.h/2,'playagain',this.restart, this);
     Game.bgcolor = Game.rndColor();
     this.game.stage.backgroundColor = Game.bgcolor;
 
@@ -55,12 +55,8 @@ Game.PlayAgain.prototype = {
   twitter: function() {
     window.open('http://twitter.com/share?text=I+lasted+'+this.runningTime+'++See+if+you+can+beat+it+at&via=rantt_&url=http://www.divideby5.com/games/reflektor/', '_blank');
   },
-  update: function() {
-    
-    if (this.game.input.activePointer.isDown){
+  restart: function() {
       music.stop();
       this.game.state.start('Play');
-    }
-
-  }
+  },
 };

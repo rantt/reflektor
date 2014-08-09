@@ -50,6 +50,7 @@ Game.Load.prototype = {
     this.game.load.atlasXML('reflektor','assets/images/reflektor_sheet.png','assets/atlas/reflektor_sheet.xml',0);
     this.game.load.spritesheet('star', 'assets/images/star.png', 20, 20);
     this.game.load.image('twitter','assets/images/twitter.png');
+    this.game.load.image('playagain','assets/images/playagain.png');
     this.game.load.audio('hit1','assets/audio/hit1.wav');
     this.game.load.audio('hit2','assets/audio/hit2.wav');
 
