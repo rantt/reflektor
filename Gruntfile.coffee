@@ -7,6 +7,7 @@ module.exports = (grunt) ->
     DST_DIR: 'dist'
     DST_FILE:  '<%= DST_DIR %>/main'
     INDEX_FILE: 'index.html.db5'
+    SCREENSHOT_FILE: 'screenshot.png'
 
     # For the moment grab latest phaser build
     # from GH, later on phaser might have Bower support
@@ -46,13 +47,12 @@ module.exports = (grunt) ->
           src: ['**']
           dest: '<%= DST_DIR %>/assets/audio/'
         ]
-      index:
+      screenshot:
         files: [
-          src: ['<%= SRC_DIR %>/<%= INDEX_FILE %>]']
+          src: '<%= SCREENSHOT_FILE %>'
           expand: false
           flatten: true
-          dest: '<%= DST_DIR %>/<%= INDEX_FILE %>'
-
+          dest: '<%= DST_DIR %>/<%= SCREENSHOT_FILE %>'
         ]
 
     jshint:
