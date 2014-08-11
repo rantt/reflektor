@@ -28,7 +28,6 @@ var arc = (2 * Math.PI) / missLimit;
 var milliseconds = 0;
 var seconds = 0;
 var minutes = 0;
-var test = null;
 
 Game.Play = function(game) {
   this.game = game;
@@ -166,19 +165,11 @@ Game.Play.prototype = {
      this.reflektor.rotation = this.game.physics.arcade.angleBetween(this.reflektor, this.player);
   }
 
-  // if (this.input.pointer1.isDown) {
-  //  test = this.input.pointer1.isDown; 
-  // }
   if (this.game.input.activePointer.isDown) {
     var pointerAngle = this.game.math.angleBetween(
         this.game.world.centerX, this.game.world.centerY,
         this.game.input.activePointer.x, this.game.input.activePointer.y
         );
-
-    test = pointerAngle;
-     // this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.cos(pointerAngle);
-     // this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
-
 
     // Move to Pointer - Kind of fun, different from keyboard controlled game
      // this.reflektor.x = this.game.input.activePointer.x + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
@@ -198,8 +189,6 @@ Game.Play.prototype = {
      //Locked to Center Rotates to face the active pointer
      this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
      this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.cos(pointerAngle);
-
-
      this.reflektor.rotation = this.game.physics.arcade.angleBetween(this.reflektor, this.player);
 
   }
@@ -268,8 +257,5 @@ Game.Play.prototype = {
       music.volume = 1;
     }
   },
-  render: function() {
-    this.game.debug.text('pointer angle '+test,32,64);
-  } 
 
 };
