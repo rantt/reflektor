@@ -22,13 +22,13 @@ var muteKey;
 var music;
 var score = 0;
 var numPoints = 6;
-var moveButtonDown = false;
 var squareSize = 64;
 var missLimit = 10;
 var arc = (2 * Math.PI) / missLimit; 
 var milliseconds = 0;
 var seconds = 0;
 var minutes = 0;
+var test = null;
 
 Game.Play = function(game) {
   this.game = game;
@@ -153,22 +153,57 @@ Game.Play.prototype = {
    this.enemy.update(this.pbullets,this.runningTime); //Check if Enemy got hit by a reflected bullet
 
 
-   if (this.cursors.left.isDown || aKey.isDown || (this.input.pointer1.x < 400 && this.input.pointer1.isDown)){
+   if (this.cursors.left.isDown || aKey.isDown ){
      this.reflektor.rAngle -= 0.25; 
      this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.cos(this.reflektor.rAngle);
      this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.sin(this.reflektor.rAngle);
      this.reflektor.rotation = this.game.physics.arcade.angleBetween(this.reflektor, this.player);
-     moveButtonDown = true;
    }
-   else if (this.cursors.right.isDown || dKey.isDown || (this.input.pointer1.x > 400 && this.input.pointer1.isDown)){
+   else if (this.cursors.right.isDown || dKey.isDown){
      this.reflektor.rAngle += 0.25; 
      this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.cos(this.reflektor.rAngle);
      this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.sin(this.reflektor.rAngle);
      this.reflektor.rotation = this.game.physics.arcade.angleBetween(this.reflektor, this.player);
-     moveButtonDown = true;
-   }else {
-     moveButtonDown = false;
-   }
+  }
+
+  // if (this.input.pointer1.isDown) {
+  //  test = this.input.pointer1.isDown; 
+  // }
+  if (this.game.input.activePointer.isDown) {
+    var pointerAngle = this.game.math.angleBetween(
+        this.game.world.centerX, this.game.world.centerY,
+        this.game.input.activePointer.x, this.game.input.activePointer.y
+        );
+
+    test = pointerAngle;
+     // this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.cos(pointerAngle);
+     // this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
+
+
+    // Move to Pointer - Kind of fun, different from keyboard controlled game
+     // this.reflektor.x = this.game.input.activePointer.x + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
+     // this.reflektor.y = this.game.input.activePointer.y + this.reflektor.distanceFromCenter * Math.cos(pointerAngle);
+     
+    //Move to Pointer but not inside the circle
+    //  this.reflektor.x = this.game.input.activePointer.x;
+    //  this.reflektor.y = this.game.input.activePointer.y;
+    // if ((this.game.input.activePointer.x > this.game.world.centerX - 30) && (this.game.input.activePointer.x < this.game.world.centerX + 30 )) {
+    //  this.game.input.activePointer.x = this.game.input.activePointer.x + 30 * Math.sin(pointerAngle);
+    // }
+    //
+    // if ((this.game.input.activePointer.y > this.game.world.centerY - 30) && (this.game.input.activePointer.y < this.game.world.centerY + 30 )) {
+    //  this.game.input.activePointer.y = this.game.input.activePointer.y + 30 * Math.cos(pointerAngle);
+    // }
+
+     //Locked to Center Rotates to face the active pointer
+     this.reflektor.x = this.game.world.centerX + this.reflektor.distanceFromCenter * Math.sin(pointerAngle);
+     this.reflektor.y = this.game.world.centerY + this.reflektor.distanceFromCenter * Math.cos(pointerAngle);
+
+
+     this.reflektor.rotation = this.game.physics.arcade.angleBetween(this.reflektor, this.player);
+
+  }
+     
   },
   reflectShot: function(reflektor,bullet) {
    this.hit[rand(0,this.hit.length-1)].play();  
@@ -233,5 +268,8 @@ Game.Play.prototype = {
       music.volume = 1;
     }
   },
+  render: function() {
+    this.game.debug.text('pointer angle '+test,32,64);
+  } 
 
 };
